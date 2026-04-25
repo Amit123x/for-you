@@ -159,12 +159,16 @@ function prev() {
 prevBtn.onclick = prev;
 nextBtn.onclick = next;
 
+const decisionText = document.getElementById("decisionText");
+
 document.getElementById("yesBtn").onclick = () => {
-    alert("Thank you ❤️");
+    decisionText.innerText = "I won't let you down ❤️";
+    decisionText.classList.add("show");
 };
 
 document.getElementById("noBtn").onclick = () => {
-    alert("I understand 💔");
+    decisionText.innerText = "I understand 💔";
+    decisionText.classList.add("show");
 };
 
 // =====================

@@ -87,3 +87,18 @@ button {
 .hidden {
   display: none;
 }
+
+.decision-text {
+    margin-top: 20px;
+    font-size: 18px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+    text-align: center;
+    color: #fff;
+}
+
+.decision-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
