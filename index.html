@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You</title>
-
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -20,13 +19,9 @@
         <!-- Card -->
         <div class="card">
 
-            <!-- IMAGE -->
-            <div class="media">
-                <img id="cardImage" src="images/1.jpg" />
-            </div>
+            <img id="cardImage" class="card-image" src="" />
 
-            <!-- TEXT -->
-            <div class="content" id="text"></div>
+            <div id="text" class="content"></div>
 
         </div>
 
@@ -36,24 +31,19 @@
             <button id="nextBtn">Next</button>
         </div>
 
-        <!-- Tap zones -->
-        <div class="tap left"></div>
-        <div class="tap right"></div>
-
     </section>
 
-    <!-- FINAL SCREEN -->
-    <div class="final" id="finalScreen">
+    <!-- Final Screen -->
+    <section id="finalScreen" class="final hidden">
         <h2>Give me one chance?</h2>
-        <div>
+        <div class="final-buttons">
             <button id="yesBtn">Yes ❤️</button>
-            <button id="noBtn">No 😒</button>
+            <button id="noBtn">No 💔</button>
         </div>
-    </div>
+    </section>
 
 </main>
 
 <script src="script.js"></script>
-
 </body>
 </html>

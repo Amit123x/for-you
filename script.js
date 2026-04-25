@@ -1,6 +1,7 @@
 // =====================
-// DATA (FIXED)
+// DATA
 // =====================
+
 const steps = [
 `Buggu…
 
@@ -45,7 +46,7 @@ ki galti kaha hui`,
 `I am really "SORRY" baccha`
 ];
 
-// MATCH YOUR RENAMED FILES
+// images (match your folder exactly)
 const images = [
 "images/1.jpg",
 "images/2.jpg",
@@ -59,87 +60,89 @@ const images = [
 ];
 
 let index = 0;
+let typingTimeout;
 
+// =====================
 // ELEMENTS
-const textEl = document.getElementById("text");
-const cardImage = document.getElementById("cardImage");
-const finalScreen = document.getElementById("finalScreen");
+// =====================
 
+const textEl = document.getElementById("text");
+const imageEl = document.getElementById("cardImage");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
+const finalScreen = document.getElementById("finalScreen");
 
 // =====================
-// TYPE EFFECT
+// TYPE EFFECT (FIXED)
 // =====================
+
 function typeText(text) {
     textEl.innerHTML = "";
-    let i = 0;
+    clearTimeout(typingTimeout);
 
-    function type() {
-        if (i < text.length) {
+    const lines = text.split("\n");
+    let lineIndex = 0;
 
-            const char = text[i];   // ✅ capture FIRST
+    function typeLine() {
+        if (lineIndex < lines.length) {
 
-            if (char === "\n") {
-                textEl.innerHTML += "<br>";
-            } else {
-                textEl.innerHTML += char;
+            const line = document.createElement("div");
+            line.className = "line";
+            textEl.appendChild(line);
+
+            let charIndex = 0;
+
+            function typeChar() {
+                if (charIndex < lines[lineIndex].length) {
+                    line.innerHTML += lines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    typingTimeout = setTimeout(typeChar, 35);
+                } else {
+                    lineIndex++;
+                    setTimeout(typeLine, 250);
+                }
             }
 
-            // delay logic based on CURRENT char
-            let delay = 35;
-            if (char === ".") delay = 120;
-            if (char === "…") delay = 250;
-            if (char === "\n") delay = 120;
-
-            i++;   // ✅ increment AFTER using char
-
-            setTimeout(type, delay);
+            typeChar();
         }
     }
 
-    type();
+    typeLine();
 }
+
 // =====================
 // UPDATE IMAGE
 // =====================
-function updateImage() {
-    cardImage.classList.remove("active");
 
-    setTimeout(() => {
-        cardImage.src = images[index % images.length];
-        cardImage.classList.add("active");
-    }, 150);
+function updateImage() {
+    imageEl.src = images[index % images.length];
 }
 
 // =====================
 // SHOW STEP
 // =====================
+
 function showStep() {
 
     if (index >= steps.length) {
-        document.querySelector(".story").style.display = "none";
-        finalScreen.classList.add("show");
+        document.querySelector(".story").classList.add("hidden");
+        finalScreen.classList.remove("hidden");
         return;
     }
 
-    textEl.classList.remove("show");
+    typeText(steps[index]);
+    updateImage();
 
-    setTimeout(() => {
-        updateImage();
-        typeText(steps[index]);
-        textEl.classList.add("show");
-    }, 200);
+    prevBtn.disabled = index === 0;
 }
 
 // =====================
 // NAVIGATION
 // =====================
+
 function next() {
-    if (index < steps.length) {
-        index++;
-        showStep();
-    }
+    index++;
+    showStep();
 }
 
 function prev() {
@@ -152,23 +155,20 @@ function prev() {
 // =====================
 // EVENTS
 // =====================
+
 prevBtn.onclick = prev;
 nextBtn.onclick = next;
 
-document.querySelector(".tap.left").onclick = prev;
-document.querySelector(".tap.right").onclick = next;
-
-// FINAL BUTTONS
 document.getElementById("yesBtn").onclick = () => {
-    finalScreen.innerHTML = "❤️ Thank you Buggu… I’ll prove it.";
+    alert("Thank you ❤️");
 };
 
 document.getElementById("noBtn").onclick = () => {
-    const btn = document.getElementById("noBtn");
-    btn.style.position = "absolute";
-    btn.style.top = Math.random()*80 + "%";
-    btn.style.left = Math.random()*80 + "%";
+    alert("I understand 💔");
 };
 
+// =====================
 // INIT
+// =====================
+
 showStep();
